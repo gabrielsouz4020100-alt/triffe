@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triffe — Relógios Originais de Coleção</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#B8952A;--gold-l:#D4AF5A;--dark:#0E0E0E;--dark2:#161616;--dark3:#1E1E1E;--dark4:#252525;--border:#2C2C2C;--border2:#383838;--text:#F0EDE8;--text2:#A0998F;--text3:#5C5650;--surf:#181818;--green:#3DAA6E;--red:#D04040;--r:8px;--rl:12px}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--text);font-family:"Inter",sans-serif;font-weight:300;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{cursor:pointer;border:none;background:none;font-family:inherit;color:inherit}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+.topbar{background:var(--gold);padding:7px 0;text-align:center}
+.topbar span{font-size:12px;font-weight:500;color:#0E0E0E}
+
+.hdr{background:var(--dark2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+.hdr-in{max-width:1400px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1.25rem;height:64px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;cursor:pointer}
+.logo-ic{width:34px;height:34px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.logo-txt{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:600;letter-spacing:1px;color:#fff}
+.logo-txt em{color:var(--gold);font-style:normal}
+.srch{flex:1;max-width:520px;position:relative}
+.srch input{width:100%;background:var(--dark3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 40px 9px 14px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s;font-family:inherit}
+.srch input::placeholder{color:var(--text3)}
+.srch input:focus{border-color:var(--gold)}
+.srch-btn{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--text3);display:flex;padding:0}
+.srch-btn:hover{color:var(--gold)}
+.hdr-r{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.ic-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:var(--r);color:var(--text2);border:1px solid var(--border);transition:all .2s;position:relative}
+.ic-btn:hover{border-color:var(--gold);color:var(--gold)}
+.fbadge{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:var(--gold);border-radius:50%;font-size:9px;font-weight:600;color:#0E0E0E;display:none;align-items:center;justify-content:center}
+
+.nav{background:var(--dark2);border-bottom:1px solid var(--border);overflow-x:auto}
+.nav::-webkit-scrollbar{height:0}
+.nav-in{max-width:1400px;margin:0 auto;padding:0 1.5rem;display:flex;min-width:max-content}
+.ni{padding:12px 14px;font-size:13px;color:var(--text2);white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;cursor:pointer;user-select:none}
+.ni:hover{color:var(--text)}
+.ni.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:500}
+
+.hero{background:linear-gradient(135deg,#0E0E0E 0%,#1A1408 45%,#0E0E0E 100%);padding:3rem 1.5rem;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-80px;right:-80px;width:460px;height:460px;border-radius:50%;background:radial-gradient(ellipse,rgba(184,149,42,.07) 0%,transparent 70%);pointer-events:none}
+.hero-in{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:center}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(1.9rem,3.2vw,3rem);font-weight:500;line-height:1.15;color:#fff;margin-bottom:1rem}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:1.6rem;max-width:390px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.cta-p{background:var(--gold);padding:11px 22px;border-radius:var(--r);font-size:14px;font-weight:500;color:#0E0E0E;display:inline-flex;align-items:center;gap:7px;transition:all .2s;cursor:pointer}
+.cta-p:hover{background:var(--gold-l);transform:translateY(-1px)}
+.cta-s{border:1px solid var(--border2);padding:11px 18px;border-radius:var(--r);font-size:14px;color:var(--text2);display:inline-flex;align-items:center;gap:7px;transition:all .2s;cursor:pointer}
+.cta-s:hover{border-color:var(--gold);color:var(--gold)}
+.badges{display:flex;gap:7px;margin-top:1.3rem;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;border:1px solid}
+.bg{background:rgba(61,170,110,.1);border-color:rgba(61,170,110,.3);color:#3DAA6E}
+.ba{background:rgba(184,149,42,.1);border-color:rgba(184,149,42,.3);color:var(--gold)}
+.hstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.hs{background:var(--dark3);padding:1.4rem;text-align:center}
+.hs-n{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:600;color:var(--gold);display:block}
+.hs-l{font-size:10px;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
+
+.trust{background:var(--dark3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-in{max-width:1400px;margin:0 auto;padding:1rem 1.5rem;display:flex;justify-content:space-around;align-items:center;gap:1rem;flex-wrap:wrap}
+.ti{display:flex;align-items:center;gap:9px}
+.ti-ic{width:32px;height:32px;border-radius:50%;background:rgba(184,149,42,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0}
+.ti p{font-size:13px;font-weight:500;color:var(--text)}
+.ti span{font-size:11px;color:var(--text3)}
+
+.main{max-width:1400px;margin:0 auto;padding:1.75rem 1.5rem;display:grid;grid-template-columns:210px 1fr;gap:1.5rem;align-items:start}
+.scard{background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:1rem}
+.sh{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:7px}
+.sh svg{color:var(--gold);flex-shrink:0}
+.sb-body{padding:6px 0}
+.fi{padding:7px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s;user-select:none}
+.fi:hover{background:var(--dark3)}
+.fi.on{background:rgba(184,149,42,.07)}
+.fi-l{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:7px}
+.fi.on .fi-l{color:var(--gold);font-weight:500}
+.fi-d{width:6px;height:6px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .2s}
+.fi.on .fi-d{background:var(--gold)}
+.fi-c{font-size:10px;color:var(--text3);background:var(--dark4);padding:2px 6px;border-radius:8px}
+
+.c-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.75rem}
+.c-hdr h2{font-size:15px;font-weight:500;color:var(--text)}
+.c-hdr p{font-size:12px;color:var(--text3);margin-top:2px}
+.ctrls{display:flex;align-items:center;gap:8px}
+.srt{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--text2);outline:none;cursor:pointer;font-family:inherit}
+.vtgl{display:flex;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.vb{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--text3);background:var(--surf);transition:all .15s;cursor:pointer}
+.vb.on{background:var(--gold);color:#0E0E0E}
+
+.empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
+.empty svg{opacity:.2;margin:0 auto 1rem;display:block}
+
+.bsec{margin-bottom:2rem}
+.bhdr{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.bpill{background:var(--dark3);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:500;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.btitle{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:500;color:var(--text)}
+.bline{flex:1;height:1px;background:var(--border)}
+.bcnt{font-size:11px;color:var(--text3);white-space:nowrap}
+
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.pgrid.lv{grid-template-columns:1fr}
+
+.pc{background:var(--surf);display:flex;flex-direction:column;cursor:pointer;transition:background .2s;position:relative}
+.pc:hover{background:var(--dark3)}
+.pgrid.lv .pc{flex-direction:row}
+.pc-img{aspect-ratio:1;background:var(--dark4);overflow:hidden;position:relative;flex-shrink:0}
+.pgrid.lv .pc-img{width:110px}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;display:block}
+.pc:hover .pc-img img{transform:scale(1.06)}
+.ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text3)}
+.ph svg{opacity:.18;width:36px;height:36px}
+.ph span{font-size:9px;text-align:center;padding:0 6px;opacity:.6}
+.pcond{position:absolute;top:8px;left:8px;font-size:9px;font-weight:600;padding:3px 7px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.cs{background:rgba(61,170,110,.88);color:#fff}
+.cb{background:rgba(184,149,42,.9);color:#0E0E0E}
+.cv{background:rgba(100,75,30,.88);color:#F5EDD8}
+.pfav{position:absolute;top:8px;right:8px;width:24px;height:24px;background:rgba(14,14,14,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all .2s;backdrop-filter:blur(4px);font-size:12px}
+.pfav:hover,.pfav.fv{color:var(--red)}
+.pfav.fv{background:rgba(208,64,64,.15)}
+.pbt{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(14,14,14,.8));padding:14px 8px 6px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(240,237,232,.45)}
+.pc-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+.pc-ref{font-size:9px;color:var(--text3);letter-spacing:.3px}
+.pc-title{font-size:12px;color:var(--text);line-height:1.35;transition:color .2s}
+.pc:hover .pc-title{color:var(--gold-l)}
+.psps{display:flex;gap:3px;flex-wrap:wrap;margin-top:1px}
+.ps{font-size:9px;color:var(--text3);background:var(--dark4);padding:2px 5px;border-radius:3px}
+.ptgs{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px}
+.pt{font-size:9px;padding:2px 5px;border-radius:3px;border:1px solid}
+.pt-g{border-color:rgba(184,149,42,.4);color:#D4AF5A}
+.pt-b{border-color:rgba(60,120,200,.4);color:#7AB0E8}
+.pt-gr{border-color:rgba(61,170,110,.4);color:#5DC48A}
+.pt-gy{border-color:var(--border2);color:var(--text3)}
+.pc-foot{padding:8px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.pgrid.lv .pc-foot{border-top:none;border-left:1px solid var(--border);min-width:140px;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px}
+.pcon{font-size:11px;color:var(--gold);font-weight:500;transition:color .2s}
+.pcon:hover{color:var(--gold-l)}
+.pav{font-size:10px;color:var(--green);display:flex;align-items:center;gap:3px}
+.pav::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* ── PRODUCT DETAIL MODAL ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+.mo.open{opacity:1;pointer-events:all}
+.md{background:var(--dark2);border:1px solid var(--border2);border-radius:var(--rl);width:100%;max-width:780px;max-height:90vh;overflow-y:auto;transform:translateY(24px);transition:transform .25s}
+.mo.open .md{transform:translateY(0)}
+
+.md-top{display:grid;grid-template-columns:340px 1fr;gap:0}
+.md-gallery{background:var(--dark4);position:relative;border-radius:var(--rl) 0 0 0;overflow:hidden;min-height:320px}
+.md-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+.md-gallery-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--text3);min-height:320px}
+.md-gallery-ph svg{opacity:.15;width:64px;height:64px}
+.md-info{padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;border-radius:0 var(--rl) 0 0;background:var(--dark2)}
+.md-close-row{display:flex;justify-content:flex-end;margin-bottom:.25rem}
+.md-x{width:28px;height:28px;border-radius:50%;background:var(--dark3);border:1px solid var(--border);color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;flex-shrink:0}
+.md-x:hover{border-color:var(--gold);color:var(--gold)}
+.md-brand{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.md-name{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:500;line-height:1.2;color:var(--text)}
+.md-ref{font-size:12px;color:var(--text3);margin-top:-2px}
+.md-cond-row{display:flex;align-items:center;gap:8px}
+.md-cond{font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.md-avail{font-size:11px;color:var(--green);display:flex;align-items:center;gap:4px}
+.md-avail::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+.md-specs{background:var(--dark3);border:1px solid var(--border);border-radius:var(--r);padding:.9rem;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.md-spec{display:flex;flex-direction:column;gap:2px}
+.md-spec-k{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--text3)}
+.md-spec-v{font-size:12px;color:var(--text2);font-weight:400}
+
+.md-desc{font-size:13px;color:var(--text2);line-height:1.7;border-top:1px solid var(--border);padding-top:.75rem}
+.md-desc-title{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem}
+
+.md-tags{display:flex;flex-wrap:wrap;gap:5px}
+
+.md-actions{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:.9rem;margin-top:auto}
+.md-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:11px;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;text-decoration:none;width:100%;font-family:inherit}
+.md-wa{background:#25D366;color:#fff}
+.md-wa:hover{background:#1ebe5a}
+.md-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.md-ig:hover{opacity:.9}
+.md-note{font-size:11px;color:var(--text3);text-align:center;line-height:1.5}
+
+/* tags inside modal */
+.md-tags .pt{font-size:10px;padding:3px 8px}
+
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--dark2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 16px;font-size:13px;color:var(--text);display:flex;align-items:center;gap:9px;z-index:600;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+.ft{background:var(--dark2);border-top:1px solid var(--border);margin-top:3rem}
+.ft-main{max-width:1400px;margin:0 auto;padding:2.5rem 1.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem}
+.ft-logo{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:.7rem}
+.ft-logo em{color:var(--gold);font-style:normal}
+.ft-desc{font-size:12px;color:var(--text3);line-height:1.7;max-width:260px;margin-bottom:1rem}
+.ft-col h4{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:.9rem}
+.ft-links{display:flex;flex-direction:column;gap:7px}
+.ft-links a{font-size:12px;color:var(--text3);transition:color .2s}
+.ft-links a:hover{color:var(--gold)}
+.ft-bot{border-top:1px solid var(--border);padding:1rem 1.5rem}
+.ft-bot-in{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--text3);flex-wrap:wrap;gap:.5rem}
+
+.pc-img img[loading]{opacity:0;transition:opacity .3s}
+.pc-img img.loaded{opacity:1}
+mark{background:rgba(184,149,42,.25);border-radius:2px;padding:0 1px;color:inherit}
+
+@media(max-width:1024px){.hero-in{grid-template-columns:1fr}.hstats{max-width:360px}.main{grid-template-columns:1fr}.sb{display:none}.ft-main{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.md-top{grid-template-columns:1fr}.md-gallery{border-radius:var(--rl) var(--rl) 0 0;min-height:220px}.md-info{border-radius:0 0 var(--rl) var(--rl)}.md-specs{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.hero-btns{flex-direction:column}.pgrid{grid-template-columns:repeat(2,1fr)}.ft-main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span>✦ Frete expresso incluso em todos os pedidos &nbsp;·&nbsp; 100% originais garantidos &nbsp;·&nbsp; Atendimento via WhatsApp ✦</span></div>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="logo" onclick="resetAll()">
+      <div class="logo-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E0E0E" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/></svg></div>
+      <div class="logo-txt">TRIFFE<em>.</em></div>
+    </div>
+    <div class="srch">
+      <input type="text" id="si" placeholder="Buscar marca, modelo, referência..." oninput="doSearch(this.value)">
+      <button class="srch-btn" onclick="doSearch(document.getElementById('si').value)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    </div>
+    <div class="hdr-r">
+      <button class="ic-btn" id="fbtn" title="Favoritos" onclick="toggleFavView()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="fbadge" id="fbadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-in" id="nav">
+    <div class="ni on" data-f="all" onclick="navF(this,'all')">Todos</div>
+    <div class="ni" data-f="seiko" onclick="navF(this,'seiko')">Seiko</div>
+    <div class="ni" data-f="hamilton" onclick="navF(this,'hamilton')">Hamilton</div>
+    <div class="ni" data-f="citizen" onclick="navF(this,'citizen')">Citizen</div>
+    <div class="ni" data-f="rado" onclick="navF(this,'rado')">Rado</div>
+    <div class="ni" data-f="sandoz" onclick="navF(this,'sandoz')">Sandoz</div>
+    <div class="ni" data-f="titoni" onclick="navF(this,'titoni')">Titoni</div>
+    <div class="ni" data-f="mido" onclick="navF(this,'mido')">Mido</div>
+    <div class="ni" data-f="luminox" onclick="navF(this,'luminox')">Luminox</div>
+    <div class="ni" data-f="automatico" onclick="navF(this,'automatico')">Automáticos</div>
+    <div class="ni" data-f="mergulho" onclick="navF(this,'mergulho')">Mergulho</div>
+    <div class="ni" data-f="vintage" onclick="navF(this,'vintage')">Vintage</div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <p class="eyebrow">Coleção Curada · 2025</p>
+      <h1>Relógios Originais<br>de <em>Coleção</em><br>& Investimento</h1>
+      <p>Peças seminovas e vintage selecionadas. Japoneses, suíços e clássicos raros. Cada relógio testado, autenticado e com garantia total.</p>
+      <div class="hero-btns">
+        <button class="cta-p" onclick="document.getElementById('cat').scrollIntoView({behavior:'smooth'})">Ver Catálogo <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <button class="cta-s" onclick="openM(null)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Falar no WhatsApp</button>
+      </div>
+      <div class="badges">
+        <span class="badge bg">✓ 100% Originais</span>
+        <span class="badge ba">★ Qualidade Garantida</span>
+        <span class="badge bg">🚚 Frete Incluso</span>
+      </div>
+    </div>
+    <div>
+      <div class="hstats">
+        <div class="hs"><span class="hs-n" id="stot">0</span><div class="hs-l">Modelos</div></div>
+        <div class="hs"><span class="hs-n">8</span><div class="hs-l">Marcas</div></div>
+        <div class="hs"><span class="hs-n">1.9k+</span><div class="hs-l">Vendidos</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-in">
+    <div class="ti"><div class="ti-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><p>Autenticidade Garantida</p><span>Verificamos cada peça antes do envio</span></div></div>
+    <div class="ti"><div class="ti-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div><p>Frete Expresso</p><span>Entrega rápida para todo o Brasil</span></div></div>
+    <div class="ti"><div class="ti-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><p>Atendimento Especializado</p><span>Consultores disponíveis</span></div></div>
+    <div class="ti"><div class="ti-ic"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div><p>Peças de Colecionador</p><span>Raras, vintage, edição limitada</span></div></div>
+  </div>
+</div>
+
+<div class="main" id="cat">
+  <aside class="sb">
+    <div class="scard">
+      <div class="sh"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Por Marca</div>
+      <div class="sb-body" id="sbB"></div>
+    </div>
+    <div class="scard">
+      <div class="sh"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Movimento</div>
+      <div class="sb-body">
+        <div class="fi on" onclick="sbF(this,'mov','all')"><span class="fi-l"><span class="fi-d"></span>Todos</span></div>
+        <div class="fi" onclick="sbF(this,'mov','automatico')"><span class="fi-l"><span class="fi-d"></span>Automático</span><span class="fi-c" id="cA">-</span></div>
+        <div class="fi" onclick="sbF(this,'mov','quartzo')"><span class="fi-l"><span class="fi-d"></span>Quartzo</span><span class="fi-c" id="cQ">-</span></div>
+        <div class="fi" onclick="sbF(this,'mov','manual')"><span class="fi-l"><span class="fi-d"></span>Manual</span><span class="fi-c" id="cM">-</span></div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="sh"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Estado</div>
+      <div class="sb-body">
+        <div class="fi on" onclick="sbF(this,'cond','all')"><span class="fi-l"><span class="fi-d"></span>Todos</span></div>
+        <div class="fi" onclick="sbF(this,'cond','seminovo')"><span class="fi-l"><span class="fi-d"></span>Seminovo (90%+)</span></div>
+        <div class="fi" onclick="sbF(this,'cond','bom')"><span class="fi-l"><span class="fi-d"></span>Bom estado (80–90%)</span></div>
+        <div class="fi" onclick="sbF(this,'cond','vintage')"><span class="fi-l"><span class="fi-d"></span>Vintage</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div>
+    <div class="c-hdr">
+      <div><h2 id="ctitle">Catálogo Completo</h2><p id="cmeta"></p></div>
+      <div class="ctrls">
+        <select class="srt" id="sortSel" onchange="curSort=this.value;render()">
+          <option value="def">Mais relevantes</option>
+          <option value="az">Nome A–Z</option>
+          <option value="za">Nome Z–A</option>
+          <option value="brand">Por marca</option>
+        </select>
+        <div class="vtgl">
+          <div class="vb on" onclick="setView('g',this)" title="Grade"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <div class="vb" onclick="setView('l',this)" title="Lista"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div id="cc"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="mo" id="mo" onclick="if(event.target===this)closeM()">
+  <div class="md">
+    <div class="md-top">
+      <div class="md-gallery" id="mdGallery">
+        <div class="md-gallery-ph" id="mdPh"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+      </div>
+      <div class="md-info">
+        <div class="md-close-row"><button class="md-x" onclick="closeM()">×</button></div>
+        <div class="md-brand" id="mdBrand"></div>
+        <div class="md-name" id="mdName"></div>
+        <div class="md-ref" id="mdRef"></div>
+        <div class="md-cond-row">
+          <span class="md-cond" id="mdCond"></span>
+          <span class="md-avail">Disponível</span>
+        </div>
+        <div class="md-specs" id="mdSpecs"></div>
+        <div>
+          <div class="md-desc-title">Descrição</div>
+          <div class="md-desc" id="mdDesc"></div>
+        </div>
+        <div class="md-tags" id="mdTags"></div>
+        <div class="md-actions">
+          <a id="waL" href="#" target="_blank" class="md-btn md-wa"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Consultar no WhatsApp</a>
+          <a id="igL" href="#" target="_blank" class="md-btn md-ig"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Ver no Instagram</a>
+          <p class="md-note">Respondemos em até 1h · Envio com rastreamento para todo o Brasil</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span style="color:var(--gold)">♡</span><span id="tmsg"></span></div>
+
+<footer class="ft">
+  <div class="ft-main">
+    <div><div class="ft-logo">TRIFFE<em>.</em></div><p class="ft-desc">Relógios originais japoneses e suíços. Peças seminovas, vintage e de coleção. Cada exemplar autenticado antes do envio.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge bg" style="font-size:10px">✓ 100% Originais</span><span class="badge ba" style="font-size:10px">★ Garantia total</span></div></div>
+    <div class="ft-col"><h4>Marcas</h4><div class="ft-links"><a href="#" onclick="navF(document.querySelector('[data-f=seiko]'),'seiko');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Seiko</a><a href="#" onclick="navF(document.querySelector('[data-f=hamilton]'),'hamilton');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Hamilton</a><a href="#" onclick="navF(document.querySelector('[data-f=citizen]'),'citizen');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Citizen</a><a href="#" onclick="navF(document.querySelector('[data-f=rado]'),'rado');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Rado</a><a href="#" onclick="navF(document.querySelector('[data-f=sandoz]'),'sandoz');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Sandoz</a></div></div>
+    <div class="ft-col"><h4>Categorias</h4><div class="ft-links"><a href="#" onclick="navF(document.querySelector('[data-f=mergulho]'),'mergulho');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Mergulho</a><a href="#" onclick="navF(document.querySelector('[data-f=automatico]'),'automatico');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Automáticos</a><a href="#" onclick="navF(document.querySelector('[data-f=vintage]'),'vintage');document.getElementById('cat').scrollIntoView({behavior:'smooth'});return false">Vintage</a></div></div>
+    <div class="ft-col"><h4>Contato</h4><div class="ft-links"><a href="#" id="ftWa">WhatsApp</a><a href="#" id="ftIg">Instagram</a><a href="#" onclick="openM(null);return false">Consultar</a></div></div>
+  </div>
+  <div class="ft-bot"><div class="ft-bot-in"><span>© 2025 Triffe · Todos os direitos reservados</span><span>Relógios Originais Japoneses &amp; Suíços</span></div></div>
+</footer>
+
+<script>
+// ══════════════════════════════════════
+// CONFIGURAÇÃO — edite aqui quando tiver os dados
+// ══════════════════════════════════════
+const CONFIG = {
+  whatsapp: "5521982028709", // substitua pelo número real
+  instagram: "https://www.instagram.com/usetriffe/" // substitua pelo link real
+};
+
+// ══════════════════════════════════════
+// PRODUTOS COM IMAGENS REAIS EXTRAÍDAS
+// ══════════════════════════════════════
+const P = [
+  // ─── SEIKO SPORT & MERGULHO ───
+  {id:1,brand:"seiko",bl:"Seiko",ser:"Seiko — Esporte & Mergulho",ref:"SKX007K2",nm:"Seiko Diver's 200m — Mostrador Preto",
+   img:"https://img.alicdn.com/bao/uploaded/i1/2490589811/O1CN01EkAJnQ2MLUwYo2wVg_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"42mm"},{k:"Calibre",v:"7S26"},{k:"Resistência",v:"200m água"},{k:"Pulseira",v:"Aço original"},{k:"Movimento",v:"Automático 21 joias"},{k:"Bizel",v:"Rotativo unidirecional"}],
+   desc:"Relógio mergulhador clássico da Seiko, 90% novo. Toda peça original — caixa, vidro e pulseira de fábrica. Calibre 7S26 verificado por instrumentos de medição. Resistente à água testado. Não tem vidro safira, usa mineral, porém sem arranhões. Frete incluso via Shunfeng Express.",
+   tl:[{t:"Mergulho",c:"pt-b"},{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"}],cat:["seiko","mergulho","automatico"]},
+
+  {id:2,brand:"seiko",bl:"Seiko",ser:"Seiko — Esporte & Mergulho",ref:"SKX779K1",nm:"Seiko Diver's — \"Monstro do Mar\" Verde",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01oQrXXQ2MLUwPQKmJC_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"42mm"},{k:"Calibre",v:"7S26"},{k:"Resistência",v:"200m água"},{k:"Bizel",v:"Rotativo verde"},{k:"Movimento",v:"Automático"},{k:"Mostrador",v:"Verde"}],
+   desc:"Ícone da Seiko — primeira versão do 'Monstro do Mar'. Peça toda original, 90% nova. Bizel rotativo unidirecional verde característico em excelente estado. Calibre 7S26 funcionando com precisão. Pulso 18cm, índices luminosos em bom estado.",
+   tl:[{t:"Mergulho",c:"pt-b"},{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"}],cat:["seiko","mergulho","automatico"]},
+
+  {id:3,brand:"seiko",bl:"Seiko",ser:"Seiko — Esporte & Mergulho",ref:"SRP747J1",nm:"Seiko Prospex — \"Tartaruga\" Automático",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01teq84K2MLUwYQqQNC_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"45mm"},{k:"Calibre",v:"4R36"},{k:"Resistência",v:"200m água"},{k:"Reserva",v:"41 horas"},{k:"Movimento",v:"Automático"},{k:"Bizel",v:"Celulose acetato"}],
+   desc:"Seiko Prospex 'Tartaruga' — referência cult entre colecionadores. Peça seminova, toda original, sem modificações. Calibre 4R36 com função de hacking e enrolamento manual. Bizel em celulose acetato típico da série SRP. Índices superluminova.",
+   tl:[{t:"Prospex",c:"pt-b"},{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"}],cat:["seiko","mergulho","automatico"]},
+
+  {id:4,brand:"seiko",bl:"Seiko",ser:"Seiko — Esporte & Mergulho",ref:"SNZG13K1",nm:"Seiko 5 Sports — \"Guerreiro da Luz\"",
+   img:"https://img.alicdn.com/bao/uploaded/i1/2490589811/O1CN01ykO7m12MLUwbdEf8H_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"41mm"},{k:"Calibre",v:"7S36"},{k:"Resistência",v:"100m água"},{k:"Calendário",v:"Dia + data"},{k:"Movimento",v:"Automático"},{k:"Mostrador",v:"Preto tático"}],
+   desc:"Seiko 5 Sports Guerreiro da Luz — 9 novo. Toda peça original, vidro mineral sem riscos. Calibre 7S36 de alta durabilidade. Mostrador preto com indicadores luminosos. Pulseira aço original ajustável. Ideal para uso diário ou colecionar.",
+   tl:[{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"100m",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  {id:5,brand:"seiko",bl:"Seiko",ser:"Seiko — Esporte & Mergulho",ref:"SNZG63J1",nm:"Seiko 5 Sports — SNZG63J1",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01YQu5ti2MLUwSZY5a0_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"41mm"},{k:"Calibre",v:"7S36"},{k:"Resistência",v:"100m água"},{k:"Calendário",v:"Dia + data"},{k:"Movimento",v:"Automático"},{k:"Pulseira",v:"Aço original"}],
+   desc:"Seiko 5 Sports SNZG63J1 em excelente estado. Peça toda original sem modificações. Calibre 7S36 verificado e funcionando com precisão. Resistência 100m testada. Frete incluso, envio Shunfeng Express com rastreamento.",
+   tl:[{t:"Automático",c:"pt-gr"},{t:"100m",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  {id:6,brand:"seiko",bl:"Seiko Presage",ser:"Seiko — Esporte & Mergulho",ref:"SPB103J1",nm:"Seiko Presage — \"Mini MM300\" 38mm",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01AYLCpt2MLUwbgXjAB_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"38mm"},{k:"Calibre",v:"6R35"},{k:"Vidro",v:"Safira"},{k:"Reserva",v:"70 horas"},{k:"Resistência",v:"100m água"},{k:"Acabamento",v:"Escovado/Polido"}],
+   desc:"Seiko Presage SPB103J1 — considerado o 'Mini Marinemaster'. Peça seminova em estado impecável. Calibre 6R35 de nova geração com 70h de reserva de marcha — um dos mais confiáveis da Seiko. Vidro safira anti-reflexo. Mostrador de alta qualidade. Inclui caixa.",
+   tl:[{t:"Safira",c:"pt-g"},{t:"70h reserva",c:"pt-gr"},{t:"Presage",c:"pt-b"}],cat:["seiko","automatico"]},
+
+  {id:7,brand:"seiko",bl:"Seiko Presage",ser:"Seiko — Esporte & Mergulho",ref:"SARX025",nm:"Seiko Presage — Mostrador Champanhe",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01JiBoBf2MLUw7iJK3A_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"40mm"},{k:"Calibre",v:"6R15"},{k:"Vidro",v:"Safira dupla curvatura"},{k:"Mostrador",v:"Champanhe"},{k:"Movimento",v:"Automático"},{k:"Acabamento",v:"Polido premium"}],
+   desc:"Seiko Presage SARX025 — linha de alta qualidade fabricada exclusivamente para o mercado japonês. Vidro safira de dupla curvatura com tratamento anti-reflexo bilateral. Mostrador champanhe com acabamento 'sunburst'. Calibre 6R15 com fundo transparente.",
+   tl:[{t:"Safira",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Mercado JP",c:"pt-b"}],cat:["seiko","automatico"]},
+
+  // ─── SEIKO 5 CLÁSSICO ───
+  {id:8,brand:"seiko",bl:"Seiko 5",ser:"Seiko 5 — Clássicos & Vintage",ref:"SNK357K1",nm:"Seiko 5 Automático — Mostrador Azul",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01IQvVsk2MLUwbMvT6E_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"90% Novo",
+   sp:[{k:"Diâmetro",v:"37mm"},{k:"Calibre",v:"7S26C"},{k:"Mostrador",v:"Azul"},{k:"Pulso",v:"18cm"},{k:"Índices",v:"Luminosos"},{k:"Acessórios",v:"Caixa original"}],
+   desc:"Seiko 5 SNK357K1 em azul — 9/10 de conservação. Toda peça original, frente sem arranhões visíveis. Calibre 7S26C verificado por instrumentos de medição — tempo de marcha excelente. Calendário dia+data funcionando perfeitamente. Inclui caixa. Resistente à água, luminoso.",
+   tl:[{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Caixa incl.",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  {id:9,brand:"seiko",bl:"Seiko Superior",ser:"Seiko 5 — Clássicos & Vintage",ref:"7S36A",nm:"Seiko 5 Superior — \"Leãozinho\" Safira",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01VwDJ8Z2MLUwbifE31_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"bom",cl:"85% Novo",
+   sp:[{k:"Diâmetro",v:"37mm"},{k:"Calibre",v:"7S36A"},{k:"Vidro",v:"Safira (upgrade)"},{k:"Tampa",v:"Leão gravado"},{k:"Pulseira",v:"Aço original"},{k:"Acessórios",v:"Caixa original"}],
+   desc:"Seiko 5 Superior clássico 'Leãozinho' — peça de coleção. Tampa traseira com leão gravado — marcante e rara. Vidro mineral original substituído por safira (upgrade). Calibre 7S36A verificado com precisão excelente. Ideal tanto para usar quanto para colecionar. Inclui caixa.",
+   tl:[{t:"Safira (upgrade)",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Coleção",c:"pt-b"}],cat:["seiko","automatico","vintage"]},
+
+  {id:10,brand:"seiko",bl:"Seiko 5",ser:"Seiko 5 — Clássicos & Vintage",ref:"SNKE56J1",nm:"Seiko 5 — Todo Dourado Mostrador Rayé",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01DEmyxe2MLUw3X4dGy_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",cond:"seminovo",cl:"90% Novo",
+   sp:[{k:"Diâmetro",v:"38.5mm"},{k:"Calibre",v:"7S26"},{k:"Acabamento",v:"Todo dourado"},{k:"Mostrador",v:"Textura rayé dourada"},{k:"Índices",v:"Luminosos dourados"},{k:"Resistência",v:"Resistente à água"}],
+   desc:"Seiko 5 SNKE56J1 — edição todo dourado de alto impacto visual. Peça 9/10, toda original. Mostrador com textura rayé (raios de sol) característica. Calibre 7S26 verificado e funcionando com excelente precisão. Resistente à água. Luminoso. Inclui caixa anti-poeira.",
+   tl:[{t:"Todo dourado",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Caixa incl.",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  {id:11,brand:"seiko",bl:"Seiko 5",ser:"Seiko 5 — Clássicos & Vintage",ref:"01T0",nm:"Seiko 5 — Bicolor Ouro/Prata (Two-Tone)",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN010aAEt72MLUwaF6dc6_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"bom",cl:"85% Novo",
+   sp:[{k:"Diâmetro",v:"36mm"},{k:"Calibre",v:"7S36"},{k:"Vidro",v:"Safira (upgrade)"},{k:"Acabamento",v:"Bicolor Ouro/Prata"},{k:"Pulso",v:"18cm"},{k:"Bizel",v:"Aço dentado pequeno"}],
+   desc:"Seiko 5 Superior 01T0 bicolor — peça compacta e elegante. Vidro mineral substituído por safira anti-arranhão. Calibre 7S36 com precisão verificada por instrumentos. Acabamento bicolor: caixa e pulseira em combinação ouro/prata. Arranhão superficial na cabeça — não afeta uso. Ideal para uso formal.",
+   tl:[{t:"Safira (upgrade)",c:"pt-g"},{t:"Bicolor",c:"pt-gr"},{t:"Automático",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  {id:12,brand:"seiko",bl:"Seiko 5",ser:"Seiko 5 — Clássicos & Vintage",ref:"03H0",nm:"Seiko 5 — Mostrador Branco Índices Dourados",
+   img:"https://img.alicdn.com/bao/uploaded/i1/2490589811/O1CN017TQXMY2MLUwZ6LcDT_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"seminovo",cl:"90% Novo",
+   sp:[{k:"Diâmetro",v:"38mm"},{k:"Calibre",v:"7S26B"},{k:"Mostrador",v:"Branco"},{k:"Índices",v:"Dourados luminosos"},{k:"Pulso",v:"18.5cm"},{k:"Acessórios",v:"Caixa original"}],
+   desc:"Seiko 5 03H0 em estado impecável — 9/10. Toda peça original, frente sem arranhões. Calibre 7S26B verificado em instrumentos de medição — marcha excelente. Mostrador branco limpo com índices dourados de alto impacto. Pulseira aço original com brilho preservado. Inclui caixa.",
+   tl:[{t:"Luminoso",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Caixa incl.",c:"pt-gy"}],cat:["seiko","automatico"]},
+
+  // ─── CITIZEN ───
+  {id:13,brand:"citizen",bl:"Citizen",ser:"Citizen — Originais Japoneses",ref:"NH2970-57EB",nm:"Citizen Mecânico — Mostrador Branco NH2970",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01VwDJ8Z2MLUwbifE31_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",
+   cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"21 joias"},{k:"Movimento",v:"Automático"},{k:"Calendário",v:"Dia + data"},{k:"Mostrador",v:"Branco"},{k:"Caixa",v:"Aço inox"},{k:"Origem",v:"Japão"}],
+   desc:"Citizen mecânico NH2970-57EB vintage japonês — peça de retorno do Japão em estado original preservado. 21 joias. Mostrador branco limpo, calendário dia+data em funcionamento. Calibre verificado, marcha normal e estável. Ideal para colecionadores de peças vintage japonesas.",
+   tl:[{t:"Automático",c:"pt-gr"},{t:"Vintage Japão",c:"pt-gy"},{t:"21 joias",c:"pt-g"}],cat:["citizen","automatico","vintage"]},
+
+  {id:14,brand:"citizen",bl:"Citizen",ser:"Citizen — Originais Japoneses",ref:"NH8240-57L",nm:"Citizen Mecânico — Mostrador Azul NH8240",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01teq84K2MLUwYQqQNC_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Joias",v:"21 joias"},{k:"Movimento",v:"Automático"},{k:"Mostrador",v:"Azul"},{k:"Calendário",v:"Dia + data"},{k:"Caixa",v:"Aço inox"},{k:"Resistência",v:"Resistente à água"}],
+   desc:"Citizen NH8240-57L com mostrador azul — peça seminova, toda original. 21 joias automático de confiabilidade comprovada. Mostrador azul com ótima legibilidade. Calendário dia+data. Pulseira aço inox original. Estado geral excelente.",
+   tl:[{t:"Mostrador Azul",c:"pt-b"},{t:"Automático",c:"pt-gr"},{t:"21 joias",c:"pt-g"}],cat:["citizen","automatico"]},
+
+  {id:15,brand:"citizen",bl:"Citizen",ser:"Citizen — Originais Japoneses",ref:"NP1003-06E",nm:"Citizen Eco-Drive — Solar Esportivo",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN010aAEt72MLUwaF6dc6_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Movimento",v:"Eco-Drive Solar"},{k:"Reserva",v:"6 meses no escuro"},{k:"Resistência",v:"100m água"},{k:"Carga",v:"Luz natural e artificial"},{k:"Bateria",v:"Vitalícia (solar)"},{k:"Caixa",v:"Aço inox"}],
+   desc:"Citizen Eco-Drive NP1003-06E — tecnologia solar exclusiva da Citizen. A bateria se carrega com qualquer fonte de luz e pode durar até 6 meses no escuro. Sem necessidade de troca de pilha jamais. Peça seminova em excelente estado. Resistente à água 100m. Design esportivo.",
+   tl:[{t:"Solar Eco-Drive",c:"pt-gr"},{t:"Bateria vitalícia",c:"pt-g"},{t:"100m",c:"pt-b"}],cat:["citizen","quartzo"]},
+
+  // ─── HAMILTON ───
+  {id:16,brand:"hamilton",bl:"Hamilton",ser:"Hamilton — Americana Suíça",ref:"H82375161",nm:"Hamilton Khaki Navy — \"Homem Rã\" 46mm",
+   img:"https://img.alicdn.com/bao/uploaded/i2/https://img.alicdn.com/bao/uploaded/i2/O1CN01NKaCem1DHWn6wHnqu_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"46mm"},{k:"Calibre",v:"H-10 automático"},{k:"Resistência",v:"200m água"},{k:"Reserva",v:"80 horas"},{k:"Vidro",v:"Safira"},{k:"Origem",v:"Suíça"}],
+   desc:"Hamilton Khaki Navy 'Homem Rã' — mergulhador icônico suíço. Peça seminova em estado impecável. Calibre H-10 de fabricação própria com 80h de reserva de marcha — excepcional. Resistente a 200m. Vidro safira. Caixa grande 46mm de presença garantida no pulso. Toda peça original.",
+   tl:[{t:"Mergulho 200m",c:"pt-b"},{t:"80h reserva",c:"pt-g"},{t:"Automático",c:"pt-gr"}],cat:["hamilton","mergulho","automatico"]},
+
+  {id:17,brand:"hamilton",bl:"Hamilton",ser:"Hamilton — Americana Suíça",ref:"H70615733",nm:"Hamilton Khaki Field — Mecânico Manual 44mm",
+   img:"https://img.alicdn.com/bao/uploaded/i1/https://img.alicdn.com/bao/uploaded/i1/O1CN01tXxyuN1DHWn8f6v4M_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"44mm"},{k:"Calibre",v:"H-50 manual"},{k:"Carga",v:"Carga manual (crown)"},{k:"Reserva",v:"80 horas"},{k:"Resistência",v:"50m água"},{k:"Vidro",v:"Safira"}],
+   desc:"Hamilton Khaki Field H70615733 — relógio de campo com carga manual, estilo militar autêntico. Calibre H-50 de fabricação própria, robusto e confiável com 80h de reserva. Vidro safira. Design sem excessos, completamente funcional. Peça toda original em excelente estado.",
+   tl:[{t:"Carga manual",c:"pt-gy"},{t:"80h reserva",c:"pt-g"},{t:"Safira",c:"pt-b"}],cat:["hamilton","manual"]},
+
+  {id:18,brand:"hamilton",bl:"Hamilton",ser:"Hamilton — Americana Suíça",ref:"H38524311",nm:"Hamilton Jazzmaster — Automático Elegante 42mm",
+   img:"https://img.alicdn.com/bao/uploaded/i2/https://img.alicdn.com/bao/uploaded/i2/O1CN01T2YJrf1DHWn1wPnUZ_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"42mm"},{k:"Calibre",v:"H-10 automático"},{k:"Vidro",v:"Safira"},{k:"Reserva",v:"80 horas"},{k:"Estilo",v:"Vestir / Formal"},{k:"Pulseira",v:"Aço escovado"}],
+   desc:"Hamilton Jazzmaster — elegância americana com precisão suíça. Peça toda original em estado impecável. Calibre H-10 com 80h de reserva. Vidro safira resistente a arranhões. Design clássico ideal para ocasiões formais. Mostrador limpo, sem marcas de uso visíveis.",
+   tl:[{t:"Safira",c:"pt-g"},{t:"80h reserva",c:"pt-gr"},{t:"Formal",c:"pt-gy"}],cat:["hamilton","automatico"]},
+
+  {id:19,brand:"hamilton",bl:"Hamilton",ser:"Hamilton — Americana Suíça",ref:"H76582933",nm:"Hamilton Khaki Aviation — Cronógrafo 44mm",
+   img:"https://img.alicdn.com/bao/uploaded/i2/https://img.alicdn.com/bao/uploaded/i2/O1CN01T2YJrf1DHWn1wPnUZ_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",cond:"bom",cl:"Bom Estado",
+   sp:[{k:"Diâmetro",v:"44mm"},{k:"Movimento",v:"Quartzo suíço"},{k:"Funções",v:"Cronógrafo"},{k:"Bizel",v:"Tacímetro"},{k:"Resistência",v:"100m água"},{k:"Estilo",v:"Aviação"}],
+   desc:"Hamilton Khaki Aviation cronógrafo — referência em relógios de aviação. Quartzo suíço de alta precisão. Funções: horas, minutos, segundos, cronógrafo. Bizel com escala tacímetro. Design homenageando a aviação americana histórica. Peça em bom estado geral.",
+   tl:[{t:"Aviação",c:"pt-b"},{t:"Cronógrafo",c:"pt-g"},{t:"Quartzo",c:"pt-gy"}],cat:["hamilton","quartzo"]},
+
+  // ─── LUMINOX ───
+  {id:20,brand:"luminox",bl:"Luminox",ser:"Luminox — Táticos & Militares",ref:"F-117 Nighthawk Série 302",nm:"Luminox F-117 Nighthawk — Tático 44mm",
+   img:"https://img.alicdn.com/bao/uploaded/i1/https://img.alicdn.com/bao/uploaded/i1/O1CN01vjbSyD1DHWn8DT7Oh_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"44mm"},{k:"Movimento",v:"Quartzo suíço"},{k:"Iluminação",v:"Tritium 25 anos"},{k:"Resistência",v:"200m água"},{k:"Caixa",v:"Polycarbonate reforçado"},{k:"Uso",v:"Militar / Tático"}],
+   desc:"Luminox F-117 Nighthawk — o relógio dos pilotos da USAF (Força Aérea dos EUA). Visibilidade absoluta no escuro via tubos de Tritium que brilham por 25 anos sem bateria ou luz externa. Quartzo suíço de alta precisão. Caixa ultraleve em polycarbonate reforçado. Resistente 200m. Peça toda original.",
+   tl:[{t:"Tritium 25 anos",c:"pt-g"},{t:"Aviação / USAF",c:"pt-b"},{t:"200m",c:"pt-gr"}],cat:["luminox","quartzo","mergulho"]},
+
+  {id:21,brand:"luminox",bl:"Luminox",ser:"Luminox — Táticos & Militares",ref:"3601 Sea Seal",nm:"Luminox Sea Seal — Mergulho 45mm",
+   img:"https://img.alicdn.com/bao/uploaded/i4/https://img.alicdn.com/bao/uploaded/i4/O1CN01WdadPC1DHWn55OOWH_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"45mm"},{k:"Movimento",v:"Quartzo suíço"},{k:"Iluminação",v:"Tritium 25 anos"},{k:"Resistência",v:"200m água"},{k:"Bizel",v:"Rotativo unidirecional"},{k:"Uso",v:"Mergulho / Navy SEALs"}],
+   desc:"Luminox Sea Seal 3601 — relógio oficial dos Navy SEALs americanos. Projetado para operações de mergulho táticas. Tritium ilumina automaticamente no escuro por 25 anos. Resistente 200m com bizel rotativo. Quartzo suíço de extrema confiabilidade. Peça toda original em estado excelente.",
+   tl:[{t:"Tritium 25 anos",c:"pt-g"},{t:"Mergulho 200m",c:"pt-b"},{t:"Navy SEALs",c:"pt-gr"}],cat:["luminox","quartzo","mergulho"]},
+
+  // ─── RADO ───
+  {id:22,brand:"rado",bl:"Rado",ser:"Rado — Suíço Premium",ref:"DiaStar Classic",nm:"Rado DiaStar — Automático Clássico Suíço",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN01DEmyxe2MLUw3X4dGy_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Movimento",v:"Automático"},{k:"Caixa",v:"Aço inox"},{k:"Calendário",v:"Data única"},{k:"Origem",v:"Suíça"},{k:"Estilo",v:"Clássico vintage"},{k:"Estado",v:"Original preservado"}],
+   desc:"Rado DiaStar clássico — referência em relógios suíços vintage. Peça em estado original preservado, retorno da Suíça. Movimento automático verificado e funcionando. Rado é uma das marcas suíças com maior tradição em materiais de alta dureza. Ideal para colecionadores de relógios suíços clássicos.",
+   tl:[{t:"Suíço Rado",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Vintage",c:"pt-gy"}],cat:["rado","automatico","vintage"]},
+
+  // ─── SANDOZ ───
+  {id:23,brand:"sandoz",bl:"Sandoz",ser:"Sandoz — Suíço 25 Joias",ref:"25J Oyster Bizel",nm:"Sandoz — Automático 25J Bizel Oyster",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01IQvVsk2MLUwbMvT6E_!!4611686018427380339-0-xy_item.jpg_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"25 joias"},{k:"Movimento",v:"Automático"},{k:"Bizel",v:"Dentado (estilo Oyster)"},{k:"Caixa",v:"Aço inox"},{k:"Calendário",v:"Data única"},{k:"Origem",v:"Suíça"}],
+   desc:"Sandoz suíço 25 joias com bizel dentado estilo Oyster — peça vintage rara de alta qualidade. Movimento automático suíço de 25 joias verificado. Estado original preservado. Sandoz foi fornecedora de movimentos para diversas marcas suíças de prestígio. Peça de colecionador.",
+   tl:[{t:"Suíço",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"25 joias",c:"pt-gy"}],cat:["sandoz","automatico","vintage"]},
+
+  {id:24,brand:"sandoz",bl:"Sandoz",ser:"Sandoz — Suíço 25 Joias",ref:"25J Two-Tone",nm:"Sandoz — Automático 25J Bicolor Ouro/Aço",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN01Pv3YlS2MLUwV7YdLl_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"25 joias"},{k:"Movimento",v:"Automático"},{k:"Acabamento",v:"Bicolor Ouro/Aço"},{k:"Calendário",v:"Data única"},{k:"Caixa",v:"Aço inox"},{k:"Origem",v:"Suíça"}],
+   desc:"Sandoz bicolor suíço 25 joias — elegância vintage com acabamento ouro/aço inox. Movimento automático verificado e funcionando com precisão. Peça original preservada em estado excelente para a idade. Bicolor autêntico, não banhado — durável e de alto valor estético.",
+   tl:[{t:"Bicolor",c:"pt-g"},{t:"Suíço",c:"pt-gr"},{t:"25 joias",c:"pt-gy"}],cat:["sandoz","automatico","vintage"]},
+
+  // ─── TITONI ───
+  {id:25,brand:"titoni",bl:"Titoni",ser:"Titoni — Cosmo Star Suíço",ref:"Cosmo Star 25J",nm:"Titoni Cosmo Star — Automático 25J Original",
+   img:"https://img.alicdn.com/bao/uploaded/i1/2490589811/O1CN01LjGfzn2MLUwUlo8EM_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"25 joias"},{k:"Movimento",v:"Automático"},{k:"Caixa",v:"Aço inox"},{k:"Estado",v:"Original preservado"},{k:"Calendário",v:"Data única"},{k:"Origem",v:"Suíça"}],
+   desc:"Titoni Cosmo Star — marca suíça familiar com 100+ anos de história. Peça vintage em estado original preservado. 25 joias automático de alta qualidade. Titoni é conhecida por movimentos robustos e duráveis. Peça rara para colecionadores de relógios suíços de médio porte.",
+   tl:[{t:"Suíço Titoni",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Vintage",c:"pt-gy"}],cat:["titoni","automatico","vintage"]},
+
+  {id:26,brand:"titoni",bl:"Titoni",ser:"Titoni — Cosmo Star Suíço",ref:"5009 Classic",nm:"Titoni 5009 — Duplo Calendário Automático",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN010htWGu2MLUwSOYfxB_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"25 joias"},{k:"Movimento",v:"Automático"},{k:"Calendário",v:"Duplo (dia + data)"},{k:"Caixa",v:"Aço inox"},{k:"Bizel",v:"Aço dentado"},{k:"Origem",v:"Suíça"}],
+   desc:"Titoni 5009 clássico com duplo calendário — peça suíça de alta qualidade e rara no mercado brasileiro. 25 joias automático. Calendário dia+data em perfeito funcionamento. Bizel dentado característico da série. Estado original preservado. Ideal para colecionadores.",
+   tl:[{t:"Suíço",c:"pt-g"},{t:"Duplo calendário",c:"pt-gr"},{t:"25 joias",c:"pt-gy"}],cat:["titoni","automatico","vintage"]},
+
+  // ─── MIDO ───
+  {id:27,brand:"mido",bl:"Mido",ser:"Mido — Suíço Premium",ref:"Multifort Navigator 3ª Gen.",nm:"Mido Multifort Navigator — Rainbow 40.5mm",
+   img:"https://img.alicdn.com/bao/uploaded/i3/https://img.alicdn.com/bao/uploaded/i3/O1CN01URrSzT1DHWmwqkFml_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",
+   cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Diâmetro",v:"40.5mm"},{k:"Bizel",v:"Rainbow celulose acetato"},{k:"Vidro",v:"Safira"},{k:"Reserva",v:"80 horas"},{k:"Resistência",v:"100m água"},{k:"Origem",v:"Suíça"}],
+   desc:"Mido Multifort Navigator 3ª Geração com bizel Rainbow — uma das peças mais desejadas da Mido. Bizel em celulose acetato multicolorido, durável e de visual único. Vidro safira anti-arranhão. Calibre suíço com 80h de reserva de marcha. Peça toda original em estado excelente. Inclui caixa.",
+   tl:[{t:"Bizel Rainbow",c:"pt-g"},{t:"80h reserva",c:"pt-gr"},{t:"Safira",c:"pt-b"}],cat:["mido","automatico"]},
+
+  {id:28,brand:"mido",bl:"Mido",ser:"Mido — Suíço Premium",ref:"M005.430 Commander",nm:"Mido Commander — Automático Bicolor",
+   img:"https://img.alicdn.com/bao/uploaded/i3/https://img.alicdn.com/bao/uploaded/i3/O1CN01URrSzT1DHWmwqkFml_!!4611686018427383903-0-fleamarket.jpg_450x10000Q90.jpg_.webp",cond:"seminovo",cl:"Seminovo",
+   sp:[{k:"Série",v:"Commander"},{k:"Movimento",v:"Automático suíço"},{k:"Vidro",v:"Safira"},{k:"Acabamento",v:"Bicolor"},{k:"Calendário",v:"Data"},{k:"Origem",v:"Suíça"}],
+   desc:"Mido Commander bicolor — elegância suíça com acabamento dois tons. Peça toda original em excelente estado. Vidro safira anti-reflexo. Automático suíço confiável. Design clássico e atemporal. Ideal para uso formal ou coleção.",
+   tl:[{t:"Suíço Mido",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Bicolor",c:"pt-gy"}],cat:["mido","automatico"]},
+
+  // ─── ORIENT / DOUBLE LION ───
+  {id:29,brand:"orient",bl:"Orient / Double Lion",ser:"Orient · Double Lion — Japoneses Vintage",ref:"SK 3 Estrelas",nm:"Double Lion 3 Estrelas — 21J Automático",
+   img:"https://img.alicdn.com/bao/uploaded/i2/2490589811/O1CN010htWGu2MLUwSOYfxB_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"21 joias"},{k:"Movimento",v:"Automático"},{k:"Calendário",v:"Duplo (dia + data)"},{k:"Caixa",v:"Aço inox"},{k:"Origem",v:"Japão"},{k:"Estado",v:"Vintage preservado"}],
+   desc:"Double Lion (双狮) 3 Estrelas — ícone dos relógios automáticos japoneses vintage. Série SK de alta qualidade com 21 joias. Peça de retorno do Japão em estado original preservado. Calendário dia+data funcionando. Colecionável e raro no mercado brasileiro.",
+   tl:[{t:"Japão Vintage",c:"pt-gy"},{t:"Automático",c:"pt-gr"},{t:"21 joias",c:"pt-g"}],cat:["orient","automatico","vintage"]},
+
+  {id:30,brand:"orient",bl:"Orient / Double Lion",ser:"Orient · Double Lion — Japoneses Vintage",ref:"Multi-Year Calendar",nm:"Orient Double Lion — Calendário Perpétuo Champanhe",
+   img:"https://img.alicdn.com/bao/uploaded/i4/2490589811/O1CN010aAEt72MLUwaF6dc6_!!4611686018427380339-53-xy_item.heic_220x10000Q90.jpg_.webp",cond:"vintage",cl:"Vintage",
+   sp:[{k:"Joias",v:"21 joias"},{k:"Movimento",v:"Automático"},{k:"Calendário",v:"Multi-year perpétuo"},{k:"Mostrador",v:"Champanhe dourado"},{k:"Caixa",v:"Aço inox"},{k:"Origem",v:"Japão"}],
+   desc:"Orient Double Lion com calendário multi-year (perpétuo) — raridade técnica em relógio vintage japonês. Mostrador champanhe dourado de alta elegância. 21 joias automático. Calendário perpétuo funciona sem ajuste manual por anos. Peça de colecionador, difícil de encontrar.",
+   tl:[{t:"Perpétuo",c:"pt-g"},{t:"Automático",c:"pt-gr"},{t:"Japão Vintage",c:"pt-gy"}],cat:["orient","automatico","vintage"]},
+];
+
+// ══════════════════════════════════════
+// ESTADO & CONFIG
+// ══════════════════════════════════════
+let flt="all",mov="all",cond="all",curSort="def",view="g",q="",favOnly=false;
+let favs = JSON.parse(localStorage.getItem("tfavs")||"[]");
+const WA = CONFIG.whatsapp;
+const IG = CONFIG.instagram;
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+document.addEventListener("DOMContentLoaded",()=>{
+  // Aplicar links de contato
+  document.getElementById("ftWa").href = `https://wa.me/${WA}`;
+  document.getElementById("ftIg").href = IG;
+  document.getElementById("igL").href = IG;
+  buildSB(); updateCtrs(); render();
+  document.getElementById("stot").textContent = P.length;
+});
+
+function buildSB(){
+  const brands={};
+  P.forEach(p=>{if(!brands[p.brand])brands[p.brand]={l:p.bl,n:0};brands[p.brand].n++});
+  let h=`<div class="fi on" onclick="sbF(this,'b','all')"><span class="fi-l"><span class="fi-d"></span>Todas as marcas</span><span class="fi-c">${P.length}</span></div>`;
+  Object.entries(brands).forEach(([k,v])=>{
+    h+=`<div class="fi" onclick="sbF(this,'b','${k}')"><span class="fi-l"><span class="fi-d"></span>${v.l}</span><span class="fi-c">${v.n}</span></div>`;
+  });
+  document.getElementById("sbB").innerHTML=h;
+}
+
+function updateCtrs(){
+  document.getElementById("cA").textContent=P.filter(p=>p.cat.includes("automatico")).length;
+  document.getElementById("cQ").textContent=P.filter(p=>p.cat.includes("quartzo")).length;
+  document.getElementById("cM").textContent=P.filter(p=>p.cat.includes("manual")).length;
+}
+
+// ══════════════════════════════════════
+// FILTROS
+// ══════════════════════════════════════
+function getList(){
+  let l=[...P];
+  if(favOnly) l=l.filter(p=>favs.includes(p.id));
+  if(q){const r=q.toLowerCase();l=l.filter(p=>p.nm.toLowerCase().includes(r)||p.ref.toLowerCase().includes(r)||p.bl.toLowerCase().includes(r)||(p.desc&&p.desc.toLowerCase().includes(r))||p.sp.some(s=>s.v.toLowerCase().includes(r)))}
+  if(flt!=="all") l=l.filter(p=>p.brand===flt||p.cat.includes(flt));
+  if(mov!=="all") l=l.filter(p=>p.cat.includes(mov));
+  if(cond!=="all") l=l.filter(p=>p.cond===cond);
+  if(curSort==="az") l.sort((a,b)=>a.nm.localeCompare(b.nm));
+  else if(curSort==="za") l.sort((a,b)=>b.nm.localeCompare(a.nm));
+  else if(curSort==="brand") l.sort((a,b)=>a.brand.localeCompare(b.brand));
+  return l;
+}
+
+// ══════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════
+function render(){
+  const l=getList(),cc=document.getElementById("cc");
+  document.getElementById("ctitle").textContent=favOnly?"Meus Favoritos":q?`Resultados para "${q}"`:"Catálogo Completo";
+  document.getElementById("cmeta").textContent=`${l.length} relógio${l.length!==1?"s":""} disponível${l.length!==1?"is":""}`;
+  if(!l.length){
+    cc.innerHTML=`<div class="empty"><svg width="60" height="60" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>Nenhum relógio encontrado.<br>Tente outro filtro ou busca.</p></div>`;
+    return;
+  }
+  const grouped=!q&&flt==="all"&&mov==="all"&&cond==="all"&&!favOnly;
+  if(grouped){
+    const g={};l.forEach(p=>{if(!g[p.ser])g[p.ser]=[];g[p.ser].push(p)});
+    cc.innerHTML=Object.entries(g).map(([s,items])=>`
+      <div class="bsec">
+        <div class="bhdr">
+          <span class="bpill">${items[0].bl}</span>
+          <span class="btitle">${s.replace(/^[^—]+— /,"")}</span>
+          <span class="bline"></span>
+          <span class="bcnt">${items.length} modelo${items.length>1?"s":""}</span>
+        </div>
+        <div class="pgrid${view==="l"?" lv":""}">${items.map(cardH).join("")}</div>
+      </div>`).join("");
+  } else {
+    cc.innerHTML=`<div class="pgrid${view==="l"?" lv":""}">${l.map(cardH).join("")}</div>`;
+  }
+  updFavBadge();
+}
+
+function cardH(p){
+  const cc=p.cond==="vintage"?"cv":p.cond==="bom"?"cb":"cs";
+  const fv=favs.includes(p.id);
+  const ie=p.img?`<img src="${p.img}" alt="${p.nm.replace(/"/g,"&quot;")}" loading="lazy" crossorigin="anonymous" onload="this.classList.add('loaded')" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">`:"";
+  const pd=p.img?"display:none":"display:flex";
+  const tagsH=p.tl.map(t=>`<span class="pt ${t.c}">${t.t}</span>`).join("");
+  const specsPreview=p.sp.slice(0,3).map(s=>`<span class="ps">${s.v}</span>`).join("");
+  return`<div class="pc" onclick="openM(${p.id})">
+    <div class="pc-img">
+      ${ie}
+      <div class="ph" style="${pd}"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg><span>${p.ref}</span></div>
+      <span class="pcond ${cc}">${p.cl}</span>
+      <button class="pfav${fv?" fv":""}" onclick="event.stopPropagation();toggleFav(${p.id})">${fv?"♥":"♡"}</button>
+      <span class="pbt">${p.bl}</span>
+    </div>
+    <div class="pc-body">
+      <div class="pc-ref">${p.ref}</div>
+      <div class="pc-title">${q?hl(p.nm,q):p.nm}</div>
+      <div class="psps">${specsPreview}</div>
+      <div class="ptgs">${tagsH}</div>
+    </div>
+    <div class="pc-foot">
+      <span class="pcon">Ver detalhes →</span>
+      <span class="pav">Disponível</span>
+    </div>
+  </div>`;
+}
+
+function hl(t,q){
+  const re=new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`,"gi");
+  return t.replace(re,"<mark>$1</mark>");
+}
+
+// ══════════════════════════════════════
+// MODAL DE DETALHES
+// ══════════════════════════════════════
+function openM(id){
+  const p=id?P.find(x=>x.id===id):null;
+  if(!p){
+    // Contato geral
+    openContactOnly();return;
+  }
+  // Galeria
+  const gal=document.getElementById("mdGallery");
+  const ph=document.getElementById("mdPh");
+  if(p.img){
+    // Remove img anterior
+    const oldImg=gal.querySelector("img");
+    if(oldImg)oldImg.remove();
+    const img=document.createElement("img");
+    img.src=p.img;
+    img.alt=p.nm;
+    img.style.cssText="width:100%;height:100%;object-fit:cover;display:block;min-height:320px";
+    img.crossOrigin="anonymous";
+    img.onerror=()=>{img.onerror=null;img.style.display="none";ph.style.display="flex"};
+    ph.style.display="none";
+    gal.insertBefore(img,ph);
+  } else {
+    const oldImg=gal.querySelector("img");
+    if(oldImg)oldImg.remove();
+    ph.style.display="flex";
+  }
+
+  // Info
+  document.getElementById("mdBrand").textContent=p.bl.toUpperCase();
+  document.getElementById("mdName").textContent=p.nm;
+  document.getElementById("mdRef").textContent="Ref: "+p.ref;
+
+  // Condição
+  const condEl=document.getElementById("mdCond");
+  condEl.textContent=p.cl;
+  condEl.className="md-cond "+(p.cond==="vintage"?"cv":p.cond==="bom"?"cb":"cs");
+
+  // Specs grid
+  const specsH=p.sp.map(s=>`<div class="md-spec"><div class="md-spec-k">${s.k}</div><div class="md-spec-v">${s.v}</div></div>`).join("");
+  document.getElementById("mdSpecs").innerHTML=specsH;
+
+  // Descrição
+  document.getElementById("mdDesc").textContent=p.desc||"Entre em contato para mais informações sobre esta peça.";
+
+  // Tags
+  document.getElementById("mdTags").innerHTML=p.tl.map(t=>`<span class="pt ${t.c}" style="font-size:10px;padding:3px 8px">${t.t}</span>`).join("");
+
+  // WhatsApp link com mensagem customizada
+  const msg=encodeURIComponent(`Olá! Tenho interesse no relógio:\n\n*${p.nm}*\nRef: ${p.ref}\n\nPoderia me passar mais informações e verificar disponibilidade?`);
+  document.getElementById("waL").href=`https://wa.me/${WA}?text=${msg}`;
+
+  document.getElementById("mo").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function openContactOnly(){
+  const msg=encodeURIComponent("Olá! Vim pelo catálogo Triffe e gostaria de saber mais sobre os relógios disponíveis.");
+  document.getElementById("waL").href=`https://wa.me/${WA}?text=${msg}`;
+  document.getElementById("mdBrand").textContent="TRIFFE";
+  document.getElementById("mdName").textContent="Consultar Catálogo";
+  document.getElementById("mdRef").textContent="Atendimento personalizado";
+  document.getElementById("mdCond").textContent="";
+  document.getElementById("mdSpecs").innerHTML="";
+  document.getElementById("mdDesc").textContent="Entre em contato pelo WhatsApp ou Instagram para consultar disponibilidade, negociar e tirar dúvidas sobre qualquer peça do catálogo.";
+  document.getElementById("mdTags").innerHTML="";
+  const oldImg=document.getElementById("mdGallery").querySelector("img");
+  if(oldImg)oldImg.remove();
+  document.getElementById("mdPh").style.display="flex";
+  document.getElementById("mo").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeM(){
+  document.getElementById("mo").classList.remove("open");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeM()});
+
+// ══════════════════════════════════════
+// HANDLERS
+// ══════════════════════════════════════
+function navF(el,f){
+  document.querySelectorAll(".ni").forEach(i=>i.classList.remove("on"));
+  if(el)el.classList.add("on");
+  flt=f;q="";document.getElementById("si").value="";favOnly=false;
+  document.getElementById("fbtn").style.borderColor="";
+  render();document.getElementById("cat").scrollIntoView({behavior:"smooth"});
+}
+function sbF(el,type,val){
+  const par=el.closest(".sb-body");
+  par.querySelectorAll(".fi").forEach(i=>i.classList.remove("on"));
+  el.classList.add("on");
+  if(type==="b")flt=val==="all"?"all":val;
+  else if(type==="mov")mov=val;
+  else cond=val;
+  render();
+}
+function doSearch(v){
+  q=v.trim();favOnly=false;
+  if(q)document.querySelectorAll(".ni").forEach(i=>i.classList.remove("on"));
+  render();
+}
+function setView(v,btn){
+  view=v;
+  document.querySelectorAll(".vb").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");render();
+}
+function resetAll(){
+  flt="all";mov="all";cond="all";q="";favOnly=false;
+  document.getElementById("si").value="";
+  document.getElementById("fbtn").style.borderColor="";
+  document.querySelectorAll(".ni").forEach((i,ix)=>i.classList.toggle("on",ix===0));
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// ══════════════════════════════════════
+// FAVORITOS
+// ══════════════════════════════════════
+function toggleFav(id){
+  const ix=favs.indexOf(id);
+  if(ix===-1){favs.push(id);showToast("♥  Adicionado aos favoritos")}
+  else{favs.splice(ix,1);showToast("♡  Removido dos favoritos")}
+  localStorage.setItem("tfavs",JSON.stringify(favs));
+  updFavBadge();render();
+}
+function updFavBadge(){
+  const b=document.getElementById("fbadge");
+  b.textContent=favs.length;
+  b.style.display=favs.length?"flex":"none";
+}
+function toggleFavView(){
+  favOnly=!favOnly;
+  document.getElementById("fbtn").style.borderColor=favOnly?"var(--gold)":"";
+  if(!favOnly)document.querySelector(".ni[data-f='all']").classList.add("on");
+  else document.querySelectorAll(".ni").forEach(i=>i.classList.remove("on"));
+  render();
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+let tt;
+function showToast(msg){
+  clearTimeout(tt);
+  const t=document.getElementById("toast");
+  document.getElementById("tmsg").textContent=msg;
+  t.classList.add("show");
+  tt=setTimeout(()=>t.classList.remove("show"),2500);
+}
+</script>
+</body>
+</html>
